@@ -1,0 +1,740 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Ch. 1 · Getting Started</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32f1374f-e276-80e8-a7a6-dea1f067cacd" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🐒</span></div><h1 class="page-title" dir="auto">Ch. 1 · Getting Started</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="32f1374f-e276-8023-b811-f68c67b770e3" class=""><strong>Sous-sections</strong><br/>- Installation<br/>- Hello, World!<br/>- Hello, Cargo!</h3></div><div style="display:contents" dir="auto"><h2 id="32f1374f-e276-8014-8558-dfc4ad1a250f" class="">Installation</h2></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8058-b69e-f8deda6d75cb" class="toggle"><li><details open=""><summary>Avant de lancer un programme de Rust [Process]</summary><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-8025-957b-d757f4b5ff02" class="code code-wrap"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">rustc NOMDUFICHIER.rs</code></pre></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-80e3-a047-fb61e6c2e2bc" class="toggle"><li><details open=""><summary>Vérifier que le fichier est en local, puis exécuter dans le terminal VS Code [Ctrl + ù]<br/>&gt; Penser à taper la commande suivante : </summary><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-803e-bc07-e4bcb2d914ce" class="code code-wrap"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">cargo init
+cargo run
+
+// Puis ensuite pour faire tourner le programme
+
+cd &quot;CHEMIN DU FICHIER (c/c le chemin d&#x27;accès de l&#x27;explorateur)&quot;
+&gt;&gt; cargo run</code></pre></div></details></li></ul></div><div style="display:contents" dir="auto"><h2 id="32f1374f-e276-8065-9a33-d75a7aaac7bb" class="">Hello, Rust ! </h2></div><div style="display:contents" dir="ltr"><table id="32f1374f-e276-80f4-9830-fc62bc78a7bd" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8015-9f54-cf5203a1c12f"><th id="yxxo" class="block-color-gray_background simple-table-header" style="width:90.65625px"><mark class="highlight-brown">main( )</mark></th><td id="VEe:" class="" style="width:512.65625px">Le contenu entre parenthèse indique les paramètres.<br/>Le reste est identique au CSS : le code est entre { } et la ligne se termine par ;</td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-800f-a681-c352f0805bd8"><th id="yxxo" class="block-color-gray_background simple-table-header" style="width:90.65625px"><mark class="highlight-pink">println!</mark></th><td id="VEe:" class="" style="width:512.65625px">Format macro de la <em>fonction</em> <strong>printIn. <br/></strong>Différence de fonction entre les deux. <br/>Hello world fait office de string ici, ajouté en argument puisque dans (” ”), pour être imprimé dans l’exécution.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80e5-a00d-f62fc2d3126b" class=""><strong>Snippets</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-803c-b3ff-ca846fe30209" class="code code-wrap"><code class="language-Rust" style="white-space:pre-wrap;word-break:break-all">fn main() {
+    println!(&quot;Hello, world!&quot;);
+}</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-802b-869f-c78c1fb9ddf6" class="">
+</p></div><div style="display:contents" dir="auto"><blockquote id="32f1374f-e276-80f3-8a65-daf713ab4c75" class="block-color-gray"><em>Le Rust est un langage de pré-compilation : tu peux créer et compiler le programme puis le donner à exécuter à quelqu’un d’autre sans impliquer une installation du langage, à l’instar du Python, JavaScript ou Ruby.<br/><br/>En conclusion : c’est plutôt pas mal pour les virus et pour créer des programmes en “environnement stérile” (hors-ligne) à faire basculer en entreprise.</em></blockquote></div><div style="display:contents" dir="auto"><h2 id="32f1374f-e276-8014-8951-c21304e0935c" class="">Hello, Cargo !</h2></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8075-9b7f-ee2e963b673c" class="">Le Cargo c’est le système et le manager de projet du Rust. Il prend en charge la construction et les librairies dont on a besoin dans le code (librairie initiale et créer spécifiquement pour le code en cours [<em>dependencies</em>]. </p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8021-979c-fcb6c752cde6" class="">Dans le cas spécifique du Hello World qu’on vient de créer, il n’y a pas de dependencies, puisqu’il s’agit de l’exécution de la librairie de base. <div class="indented"><div style="display:contents" dir="auto"><p id="32f1374f-e276-80d9-8f23-d467c2c75e5c" class=""> <mark class="highlight-gray">—&gt; Il y aura fatalement besoin de rajouter les librairies pour des fonctions non standard.</mark></p></div></div></p></div><div style="display:contents" dir="auto"><div id="32f1374f-e276-80b8-a81c-c20da9b59c35" class="column-list"><div style="display:contents" dir="auto"><div id="32f1374f-e276-8006-b4e0-dabc2213373f" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><p id="32f1374f-e276-80d4-9e7e-dfc5dc9fd063" class="">Standard [<mark class="highlight-brown">Inclus dans Cargo.toml</mark>]</p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8002-89a4-ed824458fb3e" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="32f1374f-e276-807b-a569-e58083d0780f" style="width:56.25%" class="column"><div style="display:contents" dir="auto"><p id="32f1374f-e276-8027-b690-d6b1bb49d355" class="">Non Standard </p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80d0-80bf-dda4ef007648" class="">[<mark class="highlight-purple">Les Crates, disponible sur </mark><a href="http://crates.io/">http://crates.io/</a>]</p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80b9-8a62-c5447d553df6" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><div id="32f1374f-e276-8058-adf7-c47a509c5e20" class="column-list"><div style="display:contents" dir="auto"><div id="32f1374f-e276-8048-b8c2-e1c6795d5378" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8048-b4e2-e1f6005e8888" class="bulleted-list"><li style="list-style-type:disc">Types de base — <code>String</code>, <code>Vec</code>, <code>HashMap</code>, <code>Option</code>, <code>Result</code></li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8027-8411-fd985cee6736" class="bulleted-list"><li style="list-style-type:disc">I/O — lire/écrire des fichiers, le terminal (<code>println!</code>, <code>stdin</code>)</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8011-9b72-ce63eed1e5ae" class="bulleted-list"><li style="list-style-type:disc">Threads, gestion d&#x27;erreurs, itérateurs, maths de base</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-80a7-987b-e729af70f9bc" class="bulleted-list"><li style="list-style-type:disc">Réseau basique</li></ul></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-807b-9824-c4dd9853d590" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="32f1374f-e276-8071-8747-e5358c751921" style="width:56.25%" class="column"><div style="display:contents" dir="ltr"><table id="32f1374f-e276-800c-98ed-fe3c00a59779" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-80b3-93f1-c7c6c1b8e489"><th id="l[@r" class="simple-table-header-color simple-table-header">Besoin</th><th id="][l;" class="simple-table-header-color simple-table-header">Crate</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8006-9475-c5f7b78978b6"><td id="l[@r" class="">HTTP / requêtes web</td><td id="][l;" class=""><code>reqwest</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8060-9867-e60993906808"><td id="l[@r" class="">Sérialisation JSON</td><td id="][l;" class=""><code>serde</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8072-a095-ee22421e5e27"><td id="l[@r" class="">Base de données</td><td id="][l;" class=""><code>sqlx</code>, <code>diesel</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-80c3-abfc-c3a14b092785"><td id="l[@r" class="">Interface graphique</td><td id="][l;" class=""><code>egui</code>, <code>iced</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-80a7-94eb-d25b69f51ab4"><td id="l[@r" class="">Génération aléatoire</td><td id="][l;" class=""><code>rand</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-80ba-97c9-ebddf598e96c"><td id="l[@r" class="">Dates et heures avancées</td><td id="][l;" class=""><code>chrono</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8073-90b8-d783a57042f0"><td id="l[@r" class="">Async / concurrence avancée</td><td id="][l;" class=""><code>tokio</code></td></tr></div></tbody></table></div></div></div></div></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8067-99ad-cf5c9bd18d60" class="toggle"><li><details open=""><summary>Créer un dossier directement avec l’invit de cmd (comme un vrai hacker tmtc) </summary><div style="display:contents" dir="auto"><p id="32f1374f-e276-8094-9180-c71054ecb661" class="">Ici, crée un dossier cargo. A remplacer par rustc pour créer un dossier rust.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-80d4-829d-d54f28adcacb" class="code code-wrap"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">cd &quot;CHEMIN_DACCES_OU_JE_VEUX_LE_DOSSiER_A_C/C_DEPUIS_LEXPLO_DE_FICHIER&quot;
+cargo new NOM_DU_DOSSIER
+cd NOM_DU_DOSSIER</code></pre></div></details></li></ul></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-809d-b492-d46a44d9244c" class="">Construction du fichier TOML :</p></div><div style="display:contents" dir="ltr"><table id="32f1374f-e276-80ef-a7d7-f2279b7441fd" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-8067-952b-d5f0f245f103"><th id="yxxo" class="block-color-gray_background simple-table-header" style="width:148.65625px"><mark class="highlight-yellow">[package]</mark></th><td id="VEe:" class="" style="width:512.65625px">Section qui contient les configurations du fichier. <br/>Les trois lignes suivantes sont les informations à compiler qui servent de config. <br/>Un peu comme le &lt;header&gt; en HTML visiblement.</td></tr></div><div style="display:contents" dir="ltr"><tr id="32f1374f-e276-80d8-a6c7-c809c1a1ed91"><th id="yxxo" class="block-color-gray_background simple-table-header" style="width:148.65625px"><mark class="highlight-orange">[dependencies]</mark></th><td id="VEe:" class="" style="width:512.65625px">Section où JE liste les crates que j’utilise.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80d8-962e-df2d3f8f1d78" class=""><strong>Snippets</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-80c6-9546-e93b63fad03d" class="code code-wrap"><code class="language-TOML" style="white-space:pre-wrap;word-break:break-all">[package]
+name = &quot;hello_cargo&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2024&quot;
+
+[dependencies]</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80bd-943f-dbaefcc09185" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray callout" style="white-space:pre-wrap;display:flex" id="32f1374f-e276-8006-976f-cb73f861f415"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32f1374f-e276-8023-aa3c-d94e73a2573a" class="">Un <mark class="highlight-brown_background"><strong>Top-level project directory</strong></mark> contient : </p></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-80c6-96e1-e74c49f9308c" class="bulleted-list"><li style="list-style-type:disc">README files</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8096-bb0a-dafaadb2dfdb" class="bulleted-list"><li style="list-style-type:disc">License info</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8011-9bd6-da3d5c3f202f" class="bulleted-list"><li style="list-style-type:disc">Config files</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-807b-b88f-e006d6df2cfa" class="bulleted-list"><li style="list-style-type:disc">Tout ce qui n’est pas relié au code</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8007-b5af-fc25ba994d5f" class="">Par défaut, Cargo héberge le code dans un dossier src. D’où sa fonction de manager : il range tout tout seul, y’a plus qu’à suivre le blue print.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-8048-a00c-f30f9ce7feb6" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">cargo build 
+    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8092-89ed-dc0c4d9d4fb1" class="">Créer un fichier de debug dans le directory, qu’on exécute avec la commande suivante :</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-808a-bb10-db858ea815c5" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">.\target\debug\hello_cargo.exe </code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80b8-a4f6-c8fe751ddeed" class="">Mais on peut aussi compiler l’intégralité d’un coup avec : </p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-80ae-bb1e-d6ff9a012eb9" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">cargo run
+		 Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/hello_cargo`
+Hello, world!</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8047-94a3-fd1119994bee" class="">La dernière commande est plus pratique de se rappeler des deux précédentes pour le même résultat.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-808e-a5ca-f2e59bf91b15" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">cargo check
+    Checking hello_cargo v0.1.0 (file:///projects/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80f9-b172-e670b3946194" class="">Ce code-ci vérifie le code sans produire d’executable comme le ferait le build, ce qui le rend plus rapide. C’est la commande à utiliser pour vérifier pendant qu’on code (logique) et vérifier en permanence que le code compile <mark class="highlight-gray">(chouette, après le ctrl + s, le cargo check à pas oublier. ça va définitivement bien se passer n’est-ce pas ?)</mark>. </p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-800e-abae-c787d5cf9aa8" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray callout" style="white-space:pre-wrap;display:flex" id="32f1374f-e276-80f5-8de7-f3744090e2da"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32f1374f-e276-809d-b6a2-cb24c32237db" class="">Récap à propos du cargo: </p></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-801c-8769-c47fe9d83c43" class="bulleted-list"><li style="list-style-type:disc">We can create a project using <code>cargo new</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-801e-b916-ecd5c2f3636c" class="bulleted-list"><li style="list-style-type:disc">We can build a project using <code>cargo build</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-80be-958f-d23947820fb6" class="bulleted-list"><li style="list-style-type:disc">We can build and run a project in one step using <code>cargo run</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-80a2-af78-e3b38984befb" class="bulleted-list"><li style="list-style-type:disc">We can build a project without producing a binary to check for errors using <code>cargo check</code>.</li></ul></div><div style="display:contents" dir="auto"><ul id="32f1374f-e276-8088-b58d-c0c8a1301790" class="bulleted-list"><li style="list-style-type:disc">Instead of saving the result of the build in the same directory as our code, Cargo stores it in the <em>target/debug</em> directory.<br/><br/>Cela dit, avec cargo, les commandes sont identiques peu importe le système sur lequel tu travailles <mark class="highlight-gray">(et ça, c’est bien)</mark><mark class="highlight-default">.</mark></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-801b-8cd7-f0e2e44ed7c2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80e1-b0cc-e2b59d4e14e4" class="">Lorsque le project est prêt pour la release, on utilise : </p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32f1374f-e276-807c-8364-eeaf762545a8" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">cargo build --release</code></pre></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-806e-b892-c7c5ad39069b" class="">La commande lance la compilation avec optimisation en créant un fichier de release. </p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-8076-8684-f5320808c0e7" class="">A noter que la compilation s’allongera avec la présence de l’exécutable mais fera lire le fichier Rust plus vite. Le plus sage est donc de réaliser le fichier en entier AVANT de l’optimiser et de ne pas oublier cette étape avant la release pour surveiller le temps d’exécution.</p></div><div style="display:contents" dir="auto"><p id="32f1374f-e276-80c5-a198-ef424acda16a" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="32f1374f-e276-8067-8c41-e93bb569a0db"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
