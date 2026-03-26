@@ -6,499 +6,155 @@
 <title>Rust Roadmap</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
-
   :root {
-    --bg: #0d0d0d;
-    --surface: #141414;
-    --border: #2a2a2a;
-    --rust: #ce4a1e;
-    --rust-dim: #7a2c10;
-    --rust-glow: rgba(206,74,30,0.15);
-    --text: #e8e2d9;
-    --muted: #5a5a5a;
-    --done: #4a9a6a;
-    --done-dim: rgba(74,154,106,0.1);
+    --bg: #0d0d0d; --surface: #141414; --border: #2a2a2a;
+    --rust: #ce4a1e; --rust-dim: #7a2c10; --rust-glow: rgba(206,74,30,0.15);
+    --text: #e8e2d9; --muted: #5a5a5a; --done: #4a9a6a; --done-dim: rgba(74,154,106,0.1);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    min-height: 100vh;
-    padding: 2rem 1rem 4rem;
-  }
-
-  .noise {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.4;
-  }
-
-  .container {
-    position: relative; z-index: 1;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  header {
-    margin-bottom: 3rem;
-    border-left: 3px solid var(--rust);
-    padding-left: 1.5rem;
-  }
-
-  .label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--rust);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    font-weight: 800;
-    line-height: 1;
-    color: var(--text);
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'Space Mono', monospace; min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .noise { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.4; }
+  .container { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  header { margin-bottom: 2rem; border-left: 3px solid var(--rust); padding-left: 1.5rem; }
+  .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--rust); text-transform: uppercase; margin-bottom: 0.5rem; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800; line-height: 1; }
   h1 span { color: var(--rust); }
-
-  .subtitle {
-    margin-top: 0.75rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .progress-bar-wrap {
-    margin: 2rem 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .progress-bar {
-    flex: 1;
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--rust);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 8px var(--rust);
-  }
-
-  .progress-text {
-    font-size: 0.7rem;
-    color: var(--muted);
-    white-space: nowrap;
-    min-width: 60px;
-    text-align: right;
-  }
-
-  .month {
-    margin-bottom: 2.5rem;
-  }
-
-  .month-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .month-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--rust-dim);
-    line-height: 1;
-    user-select: none;
-  }
-
-  .month-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .month-goal {
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .week {
-    margin-bottom: 0.75rem;
-  }
-
-  .week-label {
-    font-size: 0.6rem;
-    color: var(--rust);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    padding-left: 2rem;
-  }
-
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.6rem 0.75rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.15s;
-    user-select: none;
-    border: 1px solid transparent;
-  }
-
-  .task:hover {
-    background: rgba(255,255,255,0.03);
-    border-color: var(--border);
-  }
-
-  .task.done {
-    background: var(--done-dim);
-    border-color: rgba(74,154,106,0.2);
-  }
-
-  .checkbox {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    border: 1.5px solid var(--muted);
-    border-radius: 2px;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    font-size: 10px;
-  }
-
-  .task.done .checkbox {
-    background: var(--done);
-    border-color: var(--done);
-    color: #0d0d0d;
-  }
-
-  .task-text {
-    font-size: 0.78rem;
-    line-height: 1.5;
-    color: var(--text);
-    transition: color 0.15s;
-  }
-
-  .task.done .task-text {
-    color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-color: var(--done);
-  }
-
-  .task-tag {
-    font-size: 0.6rem;
-    padding: 0.15rem 0.4rem;
-    border-radius: 2px;
-    margin-left: 0.4rem;
-    letter-spacing: 0.05em;
-    vertical-align: middle;
-  }
-
+  .subtitle { margin-top: 0.75rem; font-size: 0.75rem; color: var(--muted); }
+  .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .nav-link { font-size: 0.65rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; }
+  .nav-link:hover { border-color: var(--rust-dim); color: var(--rust); }
+  .nav-link.active { border-color: var(--rust); color: var(--rust); }
+  .progress-bar-wrap { margin: 1.5rem 0 2rem; display: flex; align-items: center; gap: 1rem; }
+  .progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--rust); border-radius: 2px; transition: width 0.4s ease; box-shadow: 0 0 8px var(--rust); }
+  .progress-text { font-size: 0.7rem; color: var(--muted); white-space: nowrap; min-width: 60px; text-align: right; }
+  .month { margin-bottom: 2.5rem; }
+  .month-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .month-number { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--rust-dim); line-height: 1; user-select: none; }
+  .month-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .month-goal { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .week-label { font-size: 0.6rem; color: var(--rust); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; padding-left: 2rem; }
+  .task { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0.75rem; border-radius: 4px; cursor: pointer; transition: background 0.15s; user-select: none; border: 1px solid transparent; }
+  .task:hover { background: rgba(255,255,255,0.03); border-color: var(--border); }
+  .task.done { background: var(--done-dim); border-color: rgba(74,154,106,0.2); }
+  .checkbox { width: 16px; height: 16px; min-width: 16px; border: 1.5px solid var(--muted); border-radius: 2px; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-size: 10px; }
+  .task.done .checkbox { background: var(--done); border-color: var(--done); color: #0d0d0d; }
+  .task-text { font-size: 0.78rem; line-height: 1.5; }
+  .task.done .task-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--done); }
+  .task-tag { font-size: 0.6rem; padding: 0.15rem 0.4rem; border-radius: 2px; margin-left: 0.4rem; letter-spacing: 0.05em; vertical-align: middle; }
   .tag-book { background: rgba(206,74,30,0.15); color: var(--rust); }
   .tag-practice { background: rgba(80,120,200,0.15); color: #7a9fd4; }
   .tag-project { background: rgba(160,100,200,0.15); color: #b87dd4; }
   .tag-video { background: rgba(200,160,50,0.15); color: #d4b84a; }
   .tag-community { background: rgba(74,154,106,0.15); color: #4a9a6a; }
-
-  .note {
-    margin: 0.5rem 0 1rem 2rem;
-    padding: 0.6rem 0.8rem;
-    border-left: 2px solid var(--rust-dim);
-    font-size: 0.7rem;
-    color: var(--muted);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .reset-btn {
-    display: block;
-    margin: 3rem auto 0;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s;
-  }
-
-  .reset-btn:hover {
-    border-color: var(--rust-dim);
-    color: var(--rust);
-  }
+  .note { margin: 0.5rem 0 1rem 2rem; padding: 0.6rem 0.8rem; border-left: 2px solid var(--rust-dim); font-size: 0.7rem; color: var(--muted); font-style: italic; line-height: 1.6; }
+  .week { margin-bottom: 0.75rem; }
+  .reset-btn { display: block; margin: 3rem auto 0; background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  .reset-btn:hover { border-color: var(--rust-dim); color: var(--rust); }
 </style>
 </head>
 <body>
 <div class="noise"></div>
 <div class="container">
-
   <header>
     <div class="label">Learning Path · 3 mois</div>
     <h1>Rust<span>.</span></h1>
     <div class="subtitle">Axelle & Salvinius — départ : semaine 1</div>
   </header>
 
+  <nav class="nav-links">
+    <a class="nav-link active" href="rust-roadmap.html">🗺 Roadmap</a>
+    <a class="nav-link" href="rust-ch1.html">Ch. 1 — Getting Started</a>
+    <a class="nav-link" href="rust-ch2.html">Ch. 2 — Guessing Game</a>
+  </nav>
+
   <div class="progress-bar-wrap">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width:0%"></div>
-    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     <div class="progress-text" id="progressText">0 / 0</div>
   </div>
 
-  <!-- MOIS 1 -->
   <div class="month">
     <div class="month-header">
       <div class="month-number">01</div>
-      <div>
-        <div class="month-title">Comprendre le langage</div>
-        <div class="month-goal">Objectif — lire du Rust sans paniquer</div>
-      </div>
+      <div><div class="month-title">Comprendre le langage</div><div class="month-goal">Objectif — lire du Rust sans paniquer</div></div>
     </div>
-
     <div class="week">
       <div class="week-label">Semaines 1–2</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Installer Rust + Cargo via rustup.rs <span class="task-tag tag-book">setup</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 1 : Getting Started <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 2 : Guessing Game (premier vrai programme) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 3 : Concepts communs (variables, fonctions, control flow) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 4 : Ownership (⚠ à lire deux fois) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Let's Get Rusty — vidéos Ch. 1–4 en parallèle <span class="task-tag tag-video">vidéo</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Installer Rust + Cargo via rustup.rs <span class="task-tag tag-book">setup</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 1 — Getting Started <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 2 — Guessing Game <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 3 — Common Programming Concepts <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 4 — Ownership ⚠️ lire deux fois <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Let's Get Rusty — vidéos Ch. 1–4 <span class="task-tag tag-video">vidéo</span></div></div>
     </div>
-    <div class="note">⚠ Le Ch. 4 sur l'ownership est le mur principal. Ne pas avancer tant qu'il n'est pas clair.</div>
-
+    <div class="note">⚠️ Le Ch. 4 sur l'ownership est le mur principal. Ne pas avancer tant qu'il n'est pas clair.</div>
     <div class="week">
       <div class="week-label">Semaines 3–4</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 5 : Structs <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 6 : Enums & Pattern Matching <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 7 : Modules & Packages <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 8 : Collections (Vec, HashMap) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 9 : Error Handling (Result, Option) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Rustlings — commencer les premiers exercices en parallèle <span class="task-tag tag-practice">pratique</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 5 — Structs <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 6 — Enums & Pattern Matching <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 7 — Modules & Packages <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 8 — Common Collections <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 9 — Error Handling <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Rustlings — premiers exercices <span class="task-tag tag-practice">pratique</span></div></div>
     </div>
   </div>
 
-  <!-- MOIS 2 -->
   <div class="month">
     <div class="month-header">
       <div class="month-number">02</div>
-      <div>
-        <div class="month-title">Pratiquer</div>
-        <div class="month-goal">Objectif — écrire du Rust qui compile</div>
-      </div>
+      <div><div class="month-title">Pratiquer</div><div class="month-goal">Objectif — écrire du Rust qui compile</div></div>
     </div>
-
     <div class="week">
       <div class="week-label">Semaines 5–6</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 10 : Generics & Traits <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 11 : Tests <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 12 : Mini-projet CLI (grep) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Rustlings — compléter tous les exercices <span class="task-tag tag-practice">pratique</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 10 — Generics, Traits & Lifetimes <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 11 — Writing Automated Tests <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 12 — Projet CLI : grep <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Rustlings — compléter tous les exercices <span class="task-tag tag-practice">pratique</span></div></div>
     </div>
     <div class="note">C'est ici que le borrow checker commence à "cliquer". La frustration est normale.</div>
-
     <div class="week">
       <div class="week-label">Semaines 7–8</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Comprehensive Rust (Google) — parcourir les sections floues <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">100 Exercises to Learn Rust — commencer (Luca Palmieri) <span class="task-tag tag-practice">pratique</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Choisir + définir le projet commun du mois 3 <span class="task-tag tag-project">projet</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">S'inscrire sur le Discord Rust Community <span class="task-tag tag-community">communauté</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">S'abonner à This Week in Rust <span class="task-tag tag-community">communauté</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Comprehensive Rust (Google) — sections floues <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">100 Exercises to Learn Rust — commencer <span class="task-tag tag-practice">pratique</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Choisir + définir le projet commun du mois 3 <span class="task-tag tag-project">projet</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">S'inscrire sur le Discord Rust Community <span class="task-tag tag-community">communauté</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">S'abonner à This Week in Rust <span class="task-tag tag-community">communauté</span></div></div>
     </div>
   </div>
 
-  <!-- MOIS 3 -->
   <div class="month">
     <div class="month-header">
       <div class="month-number">03</div>
-      <div>
-        <div class="month-title">Construire</div>
-        <div class="month-goal">Objectif — un projet qui tourne</div>
-      </div>
+      <div><div class="month-title">Construire</div><div class="month-goal">Objectif — un projet qui tourne</div></div>
     </div>
-
     <div class="week">
       <div class="week-label">Semaines 9–10</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">100 Exercises to Learn Rust — finir le cours <span class="task-tag tag-practice">pratique</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Démarrer le projet commun — structs de base + Cargo setup <span class="task-tag tag-project">projet</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Implémenter la logique principale du projet <span class="task-tag tag-project">projet</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">100 Exercises to Learn Rust — finir <span class="task-tag tag-practice">pratique</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Démarrer le projet — structs de base + Cargo setup <span class="task-tag tag-project">projet</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Implémenter la logique principale <span class="task-tag tag-project">projet</span></div></div>
     </div>
-
     <div class="week">
       <div class="week-label">Semaines 11–12</div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 13 : Iterators & Closures <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">The Book — Ch. 16 : Concurrence (intro) <span class="task-tag tag-book">book</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Finaliser + nettoyer le projet commun <span class="task-tag tag-project">projet</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Écrire les tests du projet <span class="task-tag tag-practice">pratique</span></div>
-      </div>
-      <div class="task" onclick="toggle(this)">
-        <div class="checkbox">✓</div>
-        <div class="task-text">Publier le projet sur GitHub <span class="task-tag tag-project">projet</span></div>
-      </div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 13 — Iterators & Closures <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Ch. 16 — Fearless Concurrency (intro) <span class="task-tag tag-book">book</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Finaliser + nettoyer le projet <span class="task-tag tag-project">projet</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Écrire les tests du projet <span class="task-tag tag-practice">pratique</span></div></div>
+      <div class="task" onclick="toggle(this)"><div class="checkbox">✓</div><div class="task-text">Publier le projet sur GitHub <span class="task-tag tag-project">projet</span></div></div>
     </div>
-    <div class="note">Bonus si l'élan est là : explorer Rust in Action, ou Bevy pour du game dev en Rust.</div>
+    <div class="note">Bonus : Rust in Action, ou Bevy pour du game dev en Rust.</div>
   </div>
 
   <button class="reset-btn" onclick="resetAll()">↺ Tout réinitialiser</button>
-
 </div>
-
 <script>
-  const STORAGE_KEY = 'rust-roadmap-v1';
-
-  function getState() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
-  }
-
-  function saveState(state) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
-  }
-
-  function getTaskId(task) {
-    return task.querySelector('.task-text').textContent.trim().slice(0, 40);
-  }
-
-  function toggle(task) {
-    task.classList.toggle('done');
-    const state = getState();
-    state[getTaskId(task)] = task.classList.contains('done');
-    saveState(state);
-    updateProgress();
-  }
-
-  function updateProgress() {
-    const tasks = document.querySelectorAll('.task');
-    const done = document.querySelectorAll('.task.done').length;
-    const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('progressText').textContent = done + ' / ' + tasks.length;
-  }
-
-  function resetAll() {
-    if (!confirm('Réinitialiser toute la progression ?')) return;
-    document.querySelectorAll('.task.done').forEach(t => t.classList.remove('done'));
-    saveState({});
-    updateProgress();
-  }
-
-  function init() {
-    const state = getState();
-    document.querySelectorAll('.task').forEach(task => {
-      if (state[getTaskId(task)]) task.classList.add('done');
-    });
-    updateProgress();
-  }
-
+  const KEY = 'rust-roadmap-v1';
+  function getState() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } }
+  function saveState(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} }
+  function getId(t) { return t.querySelector('.task-text').textContent.trim().slice(0, 40); }
+  function toggle(t) { t.classList.toggle('done'); const s = getState(); s[getId(t)] = t.classList.contains('done'); saveState(s); updateProgress(); }
+  function updateProgress() { const all = document.querySelectorAll('.task'); const done = document.querySelectorAll('.task.done').length; const pct = all.length ? Math.round((done/all.length)*100) : 0; document.getElementById('progressFill').style.width = pct+'%'; document.getElementById('progressText').textContent = done+' / '+all.length; }
+  function resetAll() { if (!confirm('Réinitialiser ?')) return; document.querySelectorAll('.task.done').forEach(t => t.classList.remove('done')); saveState({}); updateProgress(); }
+  function init() { const s = getState(); document.querySelectorAll('.task').forEach(t => { if (s[getId(t)]) t.classList.add('done'); }); updateProgress(); }
   init();
 </script>
 </body>

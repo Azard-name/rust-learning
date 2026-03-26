@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 2 · Guessing Game</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+  :root {
+    --bg: #0d0d0d; --surface: #141414; --border: #2a2a2a;
+    --rust: #ce4a1e; --rust-dim: #7a2c10;
+    --text: #e8e2d9; --muted: #5a5a5a; --done: #4a9a6a;
+    --yellow: #d4b84a; --blue: #7a9fd4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Mono', monospace; min-height: 100vh; padding: 2rem 1rem 5rem; line-height: 1.7; }
+  .noise { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.3; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); }
+  .container { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+  .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .nav-link { font-size: 0.65rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; }
+  .nav-link:hover { border-color: var(--rust-dim); color: var(--rust); }
+  .nav-link.active { border-color: var(--rust); color: var(--rust); }
+  header { margin-bottom: 3rem; border-left: 3px solid var(--rust); padding-left: 1.5rem; }
+  .ch-label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--rust); text-transform: uppercase; margin-bottom: 0.4rem; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; line-height: 1.1; }
+  .book-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; font-size: 0.65rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: 2px; letter-spacing: 0.08em; transition: all 0.15s; }
+  .book-link:hover { color: var(--rust); border-color: var(--rust-dim); }
+  .section { margin-bottom: 3rem; }
+  h2 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--rust); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); letter-spacing: 0.05em; }
+  h3 { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); margin: 1.5rem 0 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  p { font-size: 0.82rem; margin-bottom: 0.75rem; }
+  pre[class*="language-"] { background: #111 !important; border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem !important; font-size: 0.75rem !important; margin: 0.75rem 0 1.25rem; overflow-x: auto; }
+  code:not([class]) { background: rgba(206,74,30,0.12); color: var(--rust); padding: 0.15rem 0.35rem; border-radius: 2px; font-size: 0.78rem; }
+  .table-wrap { overflow-x: auto; margin: 0.75rem 0 1.25rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+  th { background: var(--surface); color: var(--rust); font-weight: 700; padding: 0.5rem 0.75rem; text-align: left; border: 1px solid var(--border); letter-spacing: 0.08em; font-size: 0.65rem; text-transform: uppercase; }
+  td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .callout { background: var(--surface); border-left: 3px solid var(--rust-dim); border-radius: 0 4px 4px 0; padding: 0.8rem 1rem; margin: 0.75rem 0 1.25rem; font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+  .callout.warn { border-color: var(--yellow); }
+  .callout.info { border-color: var(--blue); }
+  .callout.success { border-color: var(--done); }
+  .callout .icon { margin-right: 0.4rem; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  .step-badge { display: inline-block; background: var(--rust-dim); color: var(--rust); font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="container">
+
+  <nav class="nav-links">
+    <a class="nav-link" href="rust-roadmap.html">🗺 Roadmap</a>
+    <a class="nav-link" href="rust-ch1.html">Ch. 1 — Getting Started</a>
+    <a class="nav-link active" href="rust-ch2.html">Ch. 2 — Guessing Game</a>
+  </nav>
+
+  <header>
+    <div class="ch-label">The Book · Chapitre 2</div>
+    <h1>Programming a Guessing Game</h1>
+    <a class="book-link" href="https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html" target="_blank">↗ Lire le chapitre officiel</a>
+  </header>
+
+  <!-- PROCESSING A GUESS -->
+  <div class="section">
+    <div class="step-badge">étape 1</div>
+    <h2>Processing a Guess</h2>
+    <pre><code class="language-rust">use std::io;
+// Appel de librairie standard — permet à l'utilisateur d'insérer des inputs</code></pre>
+    <pre><code class="language-rust">let mut guess = String::new(); // Variable mutable pour stocker l'user input
+let apples = 5;                // Variable fixe (immutable par défaut)
+let mut bananas = 5;           // Variable mutable — peut évoluer plus tard</code></pre>
+    <div class="callout info">
+      <span class="icon">💡</span> En Rust, toutes les variables sont <strong>immutables par défaut</strong>. <code>mut</code> = mutable — déclare explicitement que la variable peut changer.
+    </div>
+    <pre><code class="language-rust">String::new
+// Fonction qui crée un nouveau String vide.
+// Le :: lie String et new (méthode associée au type String)
+// → Crée une variable mutable reliée à une valeur String vide
+let mut guess = String::new();</code></pre>
+    <pre><code class="language-rust">io::stdin()           // Utilise la fonction d'input créée par l'appel de std::io
+    .read_line(&mut guess)
+    // Méthode qui lit l'input utilisateur et le stocke dans guess
+    // &mut = référence mutable → plusieurs parties du code accèdent à la même donnée
+    // & transforme l'argument en référence (pas une copie)
+    .expect("Failed to read line");
+    // Lit la valeur retournée (Result) — si erreur, affiche le message et crash</code></pre>
+    <pre><code class="language-rust">let x = 5;
+let y = 10;
+
+println!("x = {x} and y + 2 = {}", y + 2);
+// {x} → valeur directe de x
+// {} → valeur calculée passée en argument</code></pre>
+
+    <h3>Snippet complet — étape 1</h3>
+    <pre><code class="language-rust">use std::io;
+
+fn main() {
+    println!("Guess the number ~ ♪");
+    println!("Please input your guess :");
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
+  </div>
+
+  <!-- GENERATING SECRET NUMBER -->
+  <div class="section">
+    <div class="step-badge">étape 2</div>
+    <h2>Generating a Secret Number</h2>
+    <pre><code class="language-rust">use std::io;
+use rand::Rng; // Crate externe — outil de génération aléatoire
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+    // Génère un nombre aléatoire entre 1 et 100 inclus (..= = inclusif)
+
+    println!("The secret number is: {secret_number}");
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
+    <div class="callout warn">
+      <span class="icon">⚠️</span> La version du Book (<code>"^0.999.0"</code>) n'existe pas. Utiliser <code>rand = "0.8.5"</code> dans <code>Cargo.toml</code>.
+    </div>
+  </div>
+
+  <!-- COMPARING -->
+  <div class="section">
+    <div class="step-badge">étape 3</div>
+    <h2>Comparing the Guess to the Secret Number</h2>
+    <pre><code class="language-rust">use std::cmp::Ordering; // Outil de comparaison (Less, Greater, Equal)
+use std::io;
+use rand::Rng;
+
+fn main() {
+    println!("Guess the number ~ ♪");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    println!("Please input your guess :");
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+    // u32 = unsigned 32-bit integer (0 à ~4 milliards, pas de négatifs)
+    // .trim() supprime les espaces et le \n de fin de ligne
+    // .parse() convertit le String en nombre
+
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&secret_number) { // Comparaison des deux valeurs
+        Ordering::Less    => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal   => println!("You win!"),
+    }
+}</code></pre>
+
+    <h3>Types entiers en Rust</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Signe</th><th>Plage</th></tr></thead>
+        <tbody>
+          <tr><td><code>u8</code></td><td>non signé</td><td>0 à 255</td></tr>
+          <tr><td><code>u32</code></td><td>non signé</td><td>0 à ~4 milliards</td></tr>
+          <tr><td><code>u64</code></td><td>non signé</td><td>très grand</td></tr>
+          <tr><td><code>i32</code></td><td>signé</td><td>~-2 milliards à +2 milliards</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout info">
+      <span class="icon">💡</span> <code>u8</code> suffirait ici (max 100), mais <code>u32</code> est la convention par défaut et plus compatible avec <code>gen_range</code>.
+    </div>
+  </div>
+
+  <!-- LOOP -->
+  <div class="section">
+    <div class="step-badge">étape 4</div>
+    <h2>Allowing Multiple Guesses with Looping</h2>
+    <pre><code class="language-rust">use std::cmp::Ordering;
+use std::io;
+use rand::Rng;
+
+fn main() {
+    println!("Guess the number ~ ♪");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    loop { // Boucle infinie — tourne jusqu'au break
+        println!("Please input your guess :");
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less    => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal   => {
+                println!("You win!");
+                break; // Brise le loop quand le guess est correct
+            }
+        }
+    }
+}</code></pre>
+    <div class="callout warn">
+      <span class="icon">⚠️</span> Le <code>loop</code> doit contenir <code>read_line</code> ET <code>parse</code> — sinon la boucle tourne avec la même valeur à l'infini.
+    </div>
+  </div>
+
+  <!-- HANDLING INVALID INPUT -->
+  <div class="section">
+    <div class="step-badge">étape 5</div>
+    <h2>Handling Invalid Input</h2>
+    <pre><code class="language-rust">// Version robuste — remplace .expect() par un match sur Result
+let guess: u32 = match guess.trim().parse() {
+    Ok(num) => num,       // Si parse réussit → utilise le nombre
+    Err(_)  => continue,  // Si erreur de saisie → relance le loop sans crash
+};</code></pre>
+
+    <h3>Différence .expect() vs match Ok/Err</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Approche</th><th>Si l'user tape "abc"</th></tr></thead>
+        <tbody>
+          <tr><td><code>.expect()</code></td><td>Le programme <strong>crash</strong></td></tr>
+          <tr><td><code>match Ok/Err</code></td><td>Le loop <strong>recommence</strong> proprement</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout info">
+      <span class="icon">💡</span> <code>Err(_)</code> = "je me fiche du détail de l'erreur". Le <code>_</code> ignore la valeur d'erreur.
+    </div>
+  </div>
+
+  <!-- FINAL CODE -->
+  <div class="section">
+    <div class="step-badge">code final</div>
+    <h2>Version complète</h2>
+    <pre><code class="language-rust">use std::cmp::Ordering;
+use std::io;
+use rand::Rng;
+
+fn main() {
+    println!("Guess the number ~ ♪");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_)  => continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less    => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal   => {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}</code></pre>
+    <div class="callout success">
+      <span class="icon">✅</span> Code robuste — gère les inputs invalides, boucle jusqu'à la bonne réponse, s'arrête proprement avec <code>break</code>.
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-toml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js"></script>
+</body>
+</html>
